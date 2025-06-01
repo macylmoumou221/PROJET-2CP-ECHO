@@ -108,36 +108,59 @@ exports.getUserProfile = async (req, res) => {
 // Get user's posts
 exports.getUserPosts = async (req, res) => {
   try {
+    const { id } = req.params;
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
 
-    const posts = await Post.find({ 
-      author: req.params.id,
+    // Validate user ID
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: 'ID utilisateur invalide' });
+    }
+
+    // Check if user exists
+    const userExists = await User.findById(id);
+    if (!userExists) {
+      return res.status(404).json({ message: 'Utilisateur non trouvé' });
+    }
+
+    const filter = { 
+      author: id,
       isDeleted: false 
-    })
+    };
+
+    const posts = await Post.find(filter)
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit)
-      .populate('author', 'username profilePicture role')
-      .lean();
+      .populate('author', 'username firstName lastName profilePicture role')
+      .populate({
+        path: 'comments.user',
+        select: 'username firstName lastName profilePicture role'
+      })
+      .populate({
+        path: 'comments.replies.user',
+        select: 'username firstName lastName profilePicture role'
+      })
+      .lean() || [];
 
-    const total = await Post.countDocuments({ 
-      author: req.params.id,
-      isDeleted: false 
-    });
+    const total = await Post.countDocuments(filter);
 
-    // Add counts to each post
+    // Add counts and flags to each post with null checks
     const postsWithCounts = posts.map(post => ({
       ...post,
-      upvoteCount: post.upvotes.length,
-      downvoteCount: post.downvotes.length,
-      commentCount: post.comments.length,
-      hasUpvoted: post.upvotes.some(id => id.toString() === req.user._id.toString()),
-      hasDownvoted: post.downvotes.some(id => id.toString() === req.user._id.toString())
+      upvotes: post.upvotes || [],
+      downvotes: post.downvotes || [],
+      comments: post.comments || [],
+      upvoteCount: post.upvotes?.length || 0,
+      downvoteCount: post.downvotes?.length || 0,
+      commentCount: post.comments?.length || 0,
+      hasUpvoted: false,
+      hasDownvoted: false,
+      isSaved: false
     }));
 
-    res.status(200).json({
+    return res.status(200).json({
       posts: postsWithCounts,
       pagination: {
         total,
@@ -145,11 +168,12 @@ exports.getUserPosts = async (req, res) => {
         pages: Math.ceil(total / limit)
       }
     });
+
   } catch (error) {
     console.error('Erreur de récupération des posts:', error);
-    res.status(500).json({ 
+    return res.status(500).json({
       message: 'Erreur lors de la récupération des posts',
-      error: error.message
+      error: error.message 
     });
   }
 };

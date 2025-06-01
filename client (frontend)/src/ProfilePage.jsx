@@ -136,28 +136,46 @@ console.log(user)
   const handlePhotoChange = async (e) => {
     const file = e.target.files?.[0];
     if (file) {
+      // Show immediate preview
       const reader = new FileReader();
-      reader.onloadend = async () => {
-        const result = reader.result;
-        if (typeof result === "string") {
-          setProfilePhoto(result);
-          setHasChanges(true);
-
-          // Create FormData and send the request
-          const formData = new FormData();
-          formData.append("profilePicture", file);
-
-          try {
-            await refetch('/api/users/profile', 'PUT', formData, {
-              headers: { "Content-Type": "multipart/form-data" },
-            });
-          } catch (err) {
-            console.error("Failed to update profile picture:", err);
-          }
-        }
+      reader.onloadend = () => {
+        setProfilePhoto(reader.result); // Set base64 preview immediately
       };
       reader.readAsDataURL(file);
+
+      try {
+        const formData = new FormData();
+        formData.append("profilePicture", file);
+
+        const token = localStorage.getItem("token");
+        const response = await axios.put(
+          "http://localhost:5000/api/users/profile",
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        if (response.data?.profilePicture) {
+          // Update with server URL after successful upload
+          setProfilePhoto(response.data.profilePicture);
+        }
+      } catch (err) {
+        console.error("Failed to update profile picture:", err);
+        // Revert to old picture on error
+        setProfilePhoto(user?.profilePicture || null);
+      }
     }
+  };
+
+  const getImageUrl = (url) => {
+    if (!url) return "/src/assets/UserCircle.png";
+    if (url.startsWith('data:')) return url; // Handle base64 images
+    if (url.startsWith('http')) return url;
+    return `http://localhost:5000${url}`;
   };
 
   const handleUrlPhotoChange = async () => {
@@ -407,13 +425,13 @@ console.log(user)
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {posts.map((post) => (
           <motion.div
-            key={post.id}
+            key={post._id}  // Changed from post.id
             className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
             whileHover={{ y: -5 }}
-            onClick={() => navigate(`/post/${post.id}`)}
+            onClick={() => navigate(`/post/${post._id}`)}  // Changed from post.id
           >
             {post.mediaType != 'none' && (
               <div className="relative h-48 w-full overflow-hidden">
@@ -521,9 +539,13 @@ console.log(user)
                 transition={{ duration: 0.2 }}
               >
                 <img
-                  src={profilePhoto || "/placeholder.svg"}
+                  src={getImageUrl(profilePhoto)}
                   alt={`${user?.firstName} ${user?.lastName}`}
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = "/src/assets/UserCircle.png";
+                  }}
                 />
                 <motion.div
                   className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"

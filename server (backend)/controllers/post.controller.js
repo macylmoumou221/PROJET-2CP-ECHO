@@ -90,22 +90,23 @@ exports.getPosts = async (req, res) => {
         path: 'comments.replies.user',
         select: 'username firstName lastName profilePicture role'
       })
-      .lean();
+      .lean() || [];  // Provide empty array fallback
 
     const total = await Post.countDocuments(filter);
 
-    // Get user's saved posts
-    const user = await User.findById(req.user._id).select('savedPosts').lean();
+    // Get user's saved posts with proper null checks
+    const user = await User.findById(req.user?._id).select('savedPosts').lean();
+    const savedPosts = user?.savedPosts || [];
     
-    // Add counts and flags to each post
+    // Add counts and flags to each post with null checks
     const postsWithCounts = posts.map(post => ({
       ...post,
-      upvoteCount: post.upvotes.length,
-      downvoteCount: post.downvotes.length,
-      commentCount: post.comments.length,
-      hasUpvoted: post.upvotes.some(id => id.toString() === req.user._id.toString()),
-      hasDownvoted: post.downvotes.some(id => id.toString() === req.user._id.toString()),
-      isSaved: user.savedPosts.some(id => id.toString() === post._id.toString())
+      upvoteCount: post?.upvotes?.length || 0,
+      downvoteCount: post?.downvotes?.length || 0,
+      commentCount: post?.comments?.length || 0,
+      hasUpvoted: post?.upvotes?.some(id => id?.toString() === req?.user?._id?.toString()) || false,
+      hasDownvoted: post?.downvotes?.some(id => id?.toString() === req?.user?._id?.toString()) || false,
+      isSaved: savedPosts?.some(id => id?.toString() === post?._id?.toString()) || false
     }));
 
     res.status(200).json({
@@ -155,15 +156,19 @@ exports.getPost = async (req, res) => {
       });
     }
 
-    // Get user's saved posts
-    const user = await User.findById(req.user._id).select('savedPosts').lean();
+    // Get user's saved posts with null checks
+    const user = await User.findById(req.user?._id).select('savedPosts').lean();
+    const savedPosts = user?.savedPosts || [];
 
-    // Add interaction flags
+    // Add interaction flags with null checks
     const postWithFlags = {
       ...post,
-      hasUpvoted: post.upvotes.some(id => id.toString() === req.user._id.toString()),
-      hasDownvoted: post.downvotes.some(id => id.toString() === req.user._id.toString()),
-      isSaved: user.savedPosts.some(id => id.toString() === post._id.toString())
+      upvoteCount: post?.upvotes?.length || 0,
+      downvoteCount: post?.downvotes?.length || 0,
+      commentCount: post?.comments?.length || 0,
+      hasUpvoted: post?.upvotes?.some(id => id?.toString() === req?.user?._id?.toString()) || false,
+      hasDownvoted: post?.downvotes?.some(id => id?.toString() === req?.user?._id?.toString()) || false,
+      isSaved: savedPosts?.some(id => id?.toString() === post?._id?.toString()) || false
     };
 
     res.status(200).json(postWithFlags);
@@ -417,11 +422,11 @@ exports.commentPost = async (req, res) => {
     const updatedPost = await Post.findById(post._id)
       .populate('comments.user', 'username firstName lastName profilePicture role')
       .populate('comments.replies.user', 'username firstName lastName profilePicture role')
-      .lean();
+      .lean() || { comments: [] };
 
     res.status(200).json({
       message: 'Commentaire ajouté avec succès',
-      comments: updatedPost.comments
+      comments: updatedPost?.comments || []
     });
   } catch (error) {
     console.error('Erreur d\'ajout de commentaire:', error);
@@ -911,6 +916,84 @@ exports.savePost = async (req, res) => {
     console.error('Erreur de sauvegarde du post:', error);
     res.status(500).json({ 
       message: 'Erreur lors de la sauvegarde du post',
+      error: error.message
+    });
+  }
+};
+
+// Get user's posts
+exports.getUserPosts = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    // Validate user ID
+    if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: 'ID utilisateur invalide' });
+    }
+
+    const filter = { 
+      author: id,
+      isDeleted: false 
+    };
+
+    const posts = await Post.find(filter)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .populate('author', 'username firstName lastName profilePicture role')
+      .populate({
+        path: 'comments.user',
+        select: 'username firstName lastName profilePicture role'
+      })
+      .populate({
+        path: 'comments.replies.user',
+        select: 'username firstName lastName profilePicture role'
+      })
+      .lean() || [];
+
+    const total = await Post.countDocuments(filter);
+
+    // Initialize default values if user is not authenticated
+    let savedPosts = [];
+    let userId = null;
+
+    // Only try to get user data if authenticated
+    if (req.user && req.user._id) {
+      const user = await User.findById(req.user._id).select('savedPosts').lean();
+      savedPosts = user?.savedPosts || [];
+      userId = req.user._id;
+    }
+
+    // Add counts and flags to each post with null checks
+    const postsWithCounts = (posts || []).map(post => ({
+      ...post,
+      upvotes: post?.upvotes || [],
+      downvotes: post?.downvotes || [],
+      comments: post?.comments || [],
+      upvoteCount: post?.upvotes?.length || 0,
+      downvoteCount: post?.downvotes?.length || 0,
+      commentCount: post?.comments?.length || 0,
+      hasUpvoted: userId ? (post?.upvotes || []).some(upvoteId => upvoteId?.toString() === userId?.toString()) : false,
+      hasDownvoted: userId ? (post?.downvotes || []).some(downvoteId => downvoteId?.toString() === userId?.toString()) : false,
+      isSaved: userId ? (savedPosts || []).some(savedId => savedId?.toString() === post?._id?.toString()) : false
+    }));
+
+    return res.status(200).json({
+      posts: postsWithCounts,
+      pagination: {
+        total,
+        page,
+        pages: Math.ceil(total / limit)
+      }
+    });
+
+  } catch (error) {
+    console.error('Erreur de récupération des posts:', error);
+    return res.status(500).json({
+      message: 'Erreur lors de la récupération des posts',
       error: error.message
     });
   }
