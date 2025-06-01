@@ -1,0 +1,6 @@
+.global {
+  width: 100%;
+  margin-left: 6px;
+  gap: 80px;
+  background-color: rgb(18, 91, 53);
+}

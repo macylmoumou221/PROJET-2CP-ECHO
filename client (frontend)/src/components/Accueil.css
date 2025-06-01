@@ -1,0 +1,87 @@
+body {
+  font-family: "Poppins", sans-serif;
+}
+body {
+  margin: 0;
+  background-color: #f6f6f6;
+  line-height: inherit;
+}
+div {
+  unicode-bidi: isolate;
+}
+.App {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  background-color: #f6f6f6;
+}
+.Navbar {
+  width: fit-content;
+  height: 100vh;
+  background: linear-gradient(180deg, #1e1e2e, #3ddc97);
+  display: flex;
+  flex-direction: column;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  position: relative;
+  top: 0;
+  left: 0;
+  margin: 0;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  background-color: #f6f6f6;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+.recherche {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 77px;
+  flex-shrink: 0;
+}
+
+.main {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  padding: 0 20px;
+}
+.publication {
+  width: 750px;
+  height: fit-content;
+  margin-left: 40px;
+  max-width: calc(100% - 475px); /* Ensure it doesn't overlap with the calendar */
+}
+.programme {
+  width: 375px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-top: 60px;
+  margin-left: 60px;
+  flex-shrink: 0;
+  gap: 20px;
+}
+
+.calendrier {
+  width: 100%;
+  height: 280px;
+  border-radius: 20px;
+  background-color: #ffffffff;
+  flex-shrink: 0;
+}
+
+.planning {
+  width: 100%;
+  height: 230px;
+  border-radius: 20px;
+  background-color: #ffffffff;
+  flex-shrink: 0;
+}

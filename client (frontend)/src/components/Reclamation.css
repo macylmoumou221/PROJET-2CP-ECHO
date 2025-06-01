@@ -1,0 +1,299 @@
+/* Reclamation.css - Main styling for the claims page */
+
+body {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  background-color: #f6f6f6;
+  line-height: inherit;
+  min-width: 1000px;
+}
+
+.Appreclamation {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  background-color: #f6f6f6;
+}
+
+.Navbarreclamation {
+  width: fit-content;
+  height: 100vh;
+  background: linear-gradient(180deg, #1e1e2e, #3ddc97);
+  display: flex;
+  flex-direction: column;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  position: relative;
+  top: 0;
+  left: 0;
+  margin: 0;
+  transition: width 0.3s ease;
+}
+
+.Navbarreclamation.navbarreclamation-open {
+  width: 260px;
+}
+
+.Navbarreclamation.navbarreclamation-closed {
+  width: 80px;
+}
+
+.containerreclamation {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  background-color: #f6f6f6;
+  overflow-y: auto;
+}
+
+.recherchereclamation {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 77px;
+  flex-shrink: 0;
+}
+
+.mainreclamation {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  position: relative;
+  flex: 1;
+}
+
+/* Role switcher - temporary for demo */
+.role-switcher {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.role-switcher::after {
+  content: "Temporaire pour démonstration";
+  position: absolute;
+  bottom: -20px;
+  font-size: 12px;
+  color: #888;
+  font-style: italic;
+}
+
+.role-button {
+  background: linear-gradient(45deg, #1e1e2e, #3ddc97);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(61, 220, 151, 0.3);
+  font-size: 15px;
+}
+
+.role-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(61, 220, 151, 0.4);
+}
+
+/* Claims container */
+.claims-container {
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.jesaispas {
+  width: 90%;
+  height: 60px;
+  margin-top: 20px;
+  background-color: #d9d9d980;
+  display: flex;
+  flex-direction: row;
+  border-radius: 30px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+  margin-left: auto;
+  margin-right: auto;
+  gap: 200px;
+}
+
+.buttondejesaispas1,
+.buttondejesaispas2 {
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  font-size: 24px;
+}
+
+.buttondejesaispas1:hover,
+.buttondejesaispas2:hover {
+  color: #3ddc97;
+}
+
+/* Add claim button (only for students) */
+.buttonpourajouterreclamation {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #1e1e2e, #3ddc97);
+  color: white;
+  font-size: 30px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(61, 220, 151, 0.4);
+  transition: all 0.3s ease;
+  z-index: 100;
+}
+
+.buttonpourajouterreclamation:hover {
+  transform: scale(1.1) rotate(90deg);
+  box-shadow: 0 8px 25px rgba(61, 220, 151, 0.5);
+}
+
+/* Claim form styling */
+.lesreclamations {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 600px;
+  background-color: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translate(-50%, 20px);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+}
+
+.distination,
+.objet {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.objet2 {
+  font-weight: 600;
+  color: #1e1e2e;
+  margin-right: 15px;
+  font-size: 18px;
+}
+.distination1 {
+  font-weight: 600;
+  color: #1e1e2e;
+  margin-right: 15px;
+  font-size: 18px;
+}
+.objet3,
+.distination2 {
+  flex: 1;
+  padding: 12px 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 16px;
+  background-color: #f9f9f9;
+  transition: all 0.2s;
+}
+.objet3:focus,
+.distination2:focus {
+  outline: none;
+  border-color: #3ddc97;
+  box-shadow: 0 0 0 2px rgba(61, 220, 151, 0.2);
+  background-color: white;
+}
+
+.objet3:focus {
+  outline: none;
+  border-color: #3ddc97;
+  box-shadow: 0 0 0 2px rgba(61, 220, 151, 0.2);
+  background-color: white;
+}
+
+.reclamation {
+  width: 100%;
+  min-height: 150px;
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 16px;
+  background-color: #f9f9f9;
+  resize: vertical;
+  margin-bottom: 20px;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+
+.reclamation:focus {
+  outline: none;
+  border-color: #3ddc97;
+  box-shadow: 0 0 0 2px rgba(61, 220, 151, 0.2);
+  background-color: white;
+}
+
+.buttondemessage {
+  background: linear-gradient(45deg, #1e1e2e, #3ddc97);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(61, 220, 151, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.buttondemessage:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(61, 220, 151, 0.4);
+}
+
+.buttondemessage span {
+  font-size: 16px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .lesreclamations {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .distination1,
+  .objet2 {
+    font-size: 16px;
+  }
+
+  .buttonpourajouterreclamation {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    bottom: 20px;
+    right: 20px;
+  }
+}

@@ -1,0 +1,140 @@
+/* The overlay that covers the entire screen and gets blurred */
+.report-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  z-index: 9998;
+}
+
+/* The actual dialog box that sits on top and is NOT blurred */
+.report-dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 500px;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translate(-50%, 20px);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+}
+
+.report-dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: linear-gradient(45deg, #ff6b6b, #ff8585);
+  color: white;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.report-dialog-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.close-dialog {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.close-dialog:hover {
+  transform: scale(1.1);
+}
+
+.report-dialog-content {
+  padding: 20px;
+}
+
+.report-dialog-content label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 500;
+  color: #1e1e2e;
+}
+
+.report-dialog-content textarea {
+  width: 100%;
+  height: 120px;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  resize: none;
+  font-family: inherit;
+  font-size: 14px;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.report-dialog-content textarea:focus {
+  outline: none;
+  border-color: #ff6b6b;
+  box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.2);
+}
+
+.report-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px 20px;
+  background-color: #f9f9f9;
+  border-top: 1px solid #e0e0e0;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.cancel-button {
+  background-color: #e0e0e0;
+  color: #666;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: all 0.2s;
+}
+
+.cancel-button:hover {
+  background-color: #d0d0d0;
+}
+
+.submit-button {
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.submit-button:hover {
+  background-color: #ff5252;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(255, 107, 107, 0.3);
+}

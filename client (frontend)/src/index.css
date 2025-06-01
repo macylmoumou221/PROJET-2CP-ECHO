@@ -1,0 +1,718 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "tailwindcss";
+body {
+  transition: background-color 0.5s ease;
+  font-family: "Jakarta Sans", sans-serif;
+
+  /* font-family: 'Outfit', sans-serif; */
+}
+
+.dark {
+  background-color: #2a2a3b;
+  color: white;
+}
+
+.dark .bg-custom {
+  background-color: #1e1e2e;
+}
+.dark .text-custom {
+  color: #ffffff;
+}
+.bg-wave-pattern {
+  background: url("/layered-waves-haikei.svg") no-repeat center;
+  background-size: cover;
+}
+.select {
+  background-color: #f4f7f9;
+  color: black;
+}
+.dark select {
+  background-color: #3c3c50;
+  color: white;
+}
+
+.dark option {
+  background-color: #1f2937;
+  color: white;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+  background-color: transparent !important;
+  -webkit-text-fill-color: white !important;
+  caret-color: white !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+@keyframes animate {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+    border-radius: 0;
+  }
+  100% {
+    transform: translateY(-1000px) rotate(720deg);
+    opacity: 0;
+    border-radius: 50%;
+  }
+}
+.input-style {
+  @apply w-full p-2 rounded-md bg-[#f4f7f9] focus:outline-none focus:ring-2 focus:ring-[#A0E6D7] text-[#1e1e2e] text-sm;
+}
+
+.dark .input-style {
+  background-color: #3c3c50;
+  color: white;
+}
+
+.item-style {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem;
+  border-radius: 1rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: box-shadow 150ms ease, transform 150ms ease;
+}
+
+.item-style:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+.dark .item-style {
+  @apply bg-[#3c3c50] text-white;
+}
+.input-style::placeholder {
+  color: #131314; /* Light mode placeholder color */
+  opacity: 1;
+}
+
+.dark .input-style::placeholder {
+  color: #d1d5db; /* Dark mode placeholder color */
+}
+/* Theme variables
+/* Light Mode */
+/* html.light .modal-box {
+  background: #ffffff;
+  color: #1e1e2e;
+  border: 1px solid #e2e8f0;
+} */
+
+/* html.light .modal-input {
+  background: #f9fafb;
+  border: 1px solid #e2e8f0;
+  color: #1e1e2e;
+} */
+
+/* html.light .modal-btn {
+  background: #1e1e2e;
+  color: #ffffff;
+} */
+
+/* html.light .modal-btn:hover {
+  opacity: 0.9;
+}
+
+html.light .close-btn {
+  color: #999; */
+/* } */
+
+/* html.light .close-btn:hover {
+  color: #1e1e2e;
+}
+
+
+html.dark .modal-box {
+  background: #1e1e2e;
+  color: #ffffff;
+  border: 1px solid #2a2a3d;
+}
+
+html.dark .modal-input {
+  background: #2a2a3d;
+  border: 1px solid #2a2a3d;
+  color: #ffffff;
+}
+
+html.dark .modal-btn {
+  background: #A0E6D7;
+  color: #1e1e2e;
+}
+
+html.dark .modal-btn:hover {
+  opacity: 0.9;
+}
+
+html.dark .close-btn {
+  color: #aaa;
+}
+
+html.dark .close-btn:hover {
+  color: #ffffff;
+}
+
+
+.modal-box {
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  width: 90%;
+  max-width: 700px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.modal-input {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  outline: none;
+}
+
+.modal-input::placeholder {
+  color: #a0aec0;
+}
+
+.file-input::file-selector-button {
+  background: transparent;
+  color: inherit;
+  border: none;
+}
+
+.modal-btn {
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.close-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #ffffff;
+  color: #1e1e2e;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 700px;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  animation: modalIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.dark .modal-content {
+  background-color: #1e1e2e;
+  color: white;
+}
+
+.modal-title {
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: gray;
+  cursor: pointer;
+}
+
+.modal-close-btn:hover {
+  color: black;
+}
+
+.dark .modal-close-btn:hover {
+  color: white;
+}
+
+.modal-empty {
+  text-align: center;
+  color: gray;
+}
+
+.modal-item-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.modal-item {
+  background-color: #f4f7f9;
+  padding: 16px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dark .modal-item {
+  background-color: #2a2a3d;
+}
+
+.modal-item-title {
+  font-weight: bold;
+}
+
+.modal-item-description {
+  font-size: 0.9rem;
+  color: gray;
+}
+
+.modal-item-location {
+  font-size: 0.75rem;
+  color: lightgray;
+}
+
+.mark-handled-btn {
+  background: none;
+  border: none;
+  color: gray;
+  cursor: pointer;
+  font-size: 0.75rem;
+}
+
+.mark-handled-btn:hover {
+  text-decoration: underline;
+}
+
+.handled-badge {
+  font-size: 0.7rem;
+  color: green;
+  font-weight: bold;
+}
+/* Backdrop grisé */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(31, 41, 55, 0.5); /* gris foncé transparent */
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Fenêtre modale */
+.my-objects-modal {
+  background-color: #f3f4f6; /* gris clair */
+  padding: 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 700px;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  color: #1f2937; /* texte foncé */
+  animation: modalIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Fermer avec le X */
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 26px;
+  cursor: pointer;
+  color: #1f2937;
+  transition: transform 0.2s ease;
+}
+
+.close-button:hover {
+  transform: scale(1.1);
+}
+
+/* Titre */
+.modal-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* Liste des objets */
+.object-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Cartes */
+.object-card {
+  background-color: #1f1f2e;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 10px;
+}
+
+/* Dark mode */
+.dark .my-objects-modal {
+  background-color: #1f1f2e;
+  color: white;
+}
+
+.dark .close-button {
+  color: white;
+}
+
+.dark .object-card {
+  background-color: #2a2a3f; /* ou #1f1f2e si tu veux uniforme */
+  color: white;
+}
+/* Mode clair explicite pour MyObjectsModal */
+html:not(.dark) .my-objects-modal {
+  background-color: #f3f4f6; /* gris clair */
+  color: #1f2937; /* texte foncé */
+}
+
+html:not(.dark) .close-button {
+  color: #1f2937;
+}
+
+html:not(.dark) .object-card {
+  background-color: #f4f7f9;
+  color: #1e1e2e;
+}
+
+/* Animation keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes floatSlow {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes modalIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes modalOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Animation utility classes */
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.animate-fade-in-right {
+  animation: fadeInRight 0.8s ease-out forwards;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: floatSlow 8s ease-in-out infinite;
+}
+
+.animate-gradient {
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+.animate-modal-in {
+  animation: modalIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-modal-out {
+  animation: modalOut 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.animate-fade-out {
+  animation: fadeOut 0.3s ease-out forwards;
+}
+
+/* When modal is open, prevent scrolling */
+.modal-open {
+  overflow: hidden;
+}
+
+/* Creative background elements animations */
+.floating-element {
+  animation: float 8s ease-in-out infinite;
+}
+
+.floating-element-slow {
+  animation: float 12s ease-in-out infinite;
+}
+
+.floating-element-reverse {
+  animation: floatReverse 10s ease-in-out infinite;
+}
+
+@keyframes floatReverse {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(15px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.pulse-element {
+  animation: pulse 6s ease-in-out infinite;
+}
+
+.pulse-element-slow {
+  animation: pulse 10s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.3;
+    transform: scale(1) rotate(45deg);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1) rotate(45deg);
+  }
+  100% {
+    opacity: 0.3;
+    transform: scale(1) rotate(45deg);
+  }
+}
+
+.sparkle {
+  opacity: 0;
+  animation: sparkle var(--duration, 5s) ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
+.light-beam {
+  opacity: 0;
+  animation: lightBeam 10s ease-in-out infinite;
+}
+
+.light-beam-slow {
+  opacity: 0;
+  animation: lightBeam 15s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+@keyframes lightBeam {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px) rotate(30deg);
+  }
+  30% {
+    opacity: 0.5;
+    transform: translateY(0) rotate(30deg);
+  }
+  70% {
+    opacity: 0.5;
+    transform: translateY(0) rotate(30deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(50px) rotate(30deg);
+  }
+}
+
+.animated-line {
+  opacity: 0;
+  animation: animatedLine 8s ease-in-out infinite;
+}
+
+.animated-line-slow {
+  opacity: 0;
+  animation: animatedLine 12s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.animated-line-reverse {
+  opacity: 0;
+  animation: animatedLineReverse 10s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+@keyframes animatedLine {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  30% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  70% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+}
+
+@keyframes animatedLineReverse {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  30% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  70% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+}

@@ -1,0 +1,254 @@
+/*this is file of Publication.css*/
+.publicationcontainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: fit-content;
+  margin-top: 50px;
+  border-radius: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.publicationcontainer.collapsed {
+  height: 60px;
+  cursor: pointer;
+}
+
+.publicationcontainer.expanded {
+  padding: 20px;
+  height: auto;
+}
+
+.post-input-area {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 15px;
+}
+
+.post-collapsed-bar {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  height: 60px;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.post-collapsed-bar:hover {
+  background-color: rgba(61, 220, 151, 0.05);
+}
+
+.post-collapsed-text {
+  color: #888;
+  font-size: 16px;
+}
+
+.post-title-input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.post-title-input:focus {
+  outline: 1px solid #3ddc97;
+  border-color: #3ddc97;
+  box-shadow: 0 0 0 2px rgba(61, 220, 151, 0.2);
+}
+
+.post-textarea {
+  width: 100%;
+  min-height: 100px;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  padding: 12px;
+  font-size: 16px;
+  resize: none;
+  font-family: "Poppins", sans-serif;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.post-textarea:focus {
+  outline: 1px solid #3ddc97;
+  border-color: #3ddc97;
+  box-shadow: 0 0 0 2px rgba(61, 220, 151, 0.2);
+}
+
+.media-preview {
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  max-height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f6f6f6;
+}
+
+.media-preview img,
+.media-preview video {
+  max-width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+}
+
+.remove-media {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+.remove-media:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+  transform: scale(1.1);
+}
+
+.post-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.media-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.media-button {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #555;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 20px;
+  transition: background-color 0.2s;
+}
+
+.media-button:hover {
+  background-color: rgba(61, 220, 151, 0.1);
+  color: #1e1e2e;
+}
+
+.media-button img {
+  width: 20px;
+  height: 20px;
+}
+
+.video-icon {
+  color: #555;
+}
+
+.post-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.post-button {
+  background-color: #3ddc97;
+  color: white;
+  border: none;
+  height: 40px;
+  padding: 0 25px;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.post-button:hover {
+  background-color: #2bc787;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(61, 220, 151, 0.3);
+}
+
+.post-button.posting {
+  background-color: #ffd700;
+  box-shadow: 0 4px 8px rgba(255, 215, 0, 0.5);
+  transform: scale(1.05);
+}
+
+.post-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.cancel-post-button {
+  background-color: #f0f0f0;
+  color: #666;
+  border: none;
+  height: 40px;
+  padding: 0 20px;
+  border-radius: 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cancel-post-button:hover {
+  background-color: #e0e0e0;
+}
+
+.messages-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 30px;
+  gap: 20px;
+}
+
+.formofpub {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: fit-content;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.formofpub:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(61, 220, 151, 0.2);
+}
+
+.file-input {
+  display: none;
+}

@@ -1,0 +1,198 @@
+/*this file is of Calendar.css*/
+.calendar-container {
+  width: 375px;
+  height: 280px;
+}
+
+.calendar-card {
+  background-color: white;
+  border-radius: 24px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.calendar-card:hover {
+  box-shadow: 0 15px 30px rgba(61, 220, 151, 0.2);
+  transform: translateY(-5px);
+}
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.month-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1e1e2e;
+  background: linear-gradient(45deg, #1e1e2e, #3ddc97);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.nav-button {
+  background-color: #f3f4f6;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #1e1e2e;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+.nav-button:hover {
+  background-color: #3ddc97;
+  color: white;
+  transform: scale(1.1);
+}
+
+.weekdays-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  margin-bottom: 2px;
+}
+
+.weekday {
+  text-align: center;
+  font-size: 10px;
+  font-weight: 600;
+  color: #1e1e2e;
+}
+
+.dates-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(6, 1fr); /* Changed from 5 to 6 rows to accommodate months with 31 days */
+  gap: 2px;
+  flex-grow: 1;
+}
+
+.date-button {
+  background: none;
+  border: none;
+  text-align: center;
+  padding: 0;
+  position: relative;
+  cursor: pointer;
+  width: 100%;
+  height: 24px; /* Reduced height to fit 6 rows */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  transition: all 0.2s;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.date-button:hover:not(.selected-date) {
+  background-color: rgba(61, 220, 151, 0.1);
+  transform: scale(1.05);
+}
+
+.current-month {
+  color: #1e1e2e;
+}
+
+.other-month {
+  color: #d1d5db;
+}
+
+.selected-date {
+  color: white;
+  transform: scale(1.05);
+}
+
+.date-circle {
+  position: absolute;
+  inset: 2px;
+  background: linear-gradient(45deg, #3ddc97, #1e1e2e);
+  border-radius: 50%;
+  z-index: 0;
+  box-shadow: 0 2px 4px rgba(61, 220, 151, 0.3);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(61, 220, 151, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 5px rgba(61, 220, 151, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(61, 220, 151, 0);
+  }
+}
+
+.date-text {
+  position: relative;
+  z-index: 1;
+  font-size: 10px; /* Reduced font size */
+}
+
+.today:not(.selected-date) {
+  font-weight: bold;
+  border: 1px dashed #3ddc97; /* Reduced border width */
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.has-event:not(.selected-date)::after {
+  content: "";
+  position: absolute;
+  bottom: 1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 3px;
+  background-color: #3ddc97;
+  border-radius: 50%;
+}
+
+.event-exam {
+  background-color: rgb(249, 115, 22, 0.1);
+  border-left: 4px solid rgb(249, 115, 22);
+}
+
+.event-deadline {
+  background-color: rgba(239, 68, 68, 0.1);
+  border-left: 4px solid rgb(239, 68, 68);
+}
+
+.event-td {
+  background-color: rgba(59, 130, 246, 0.1);
+  border-left: 4px solid rgb(59, 130, 246);
+}
+
+.day-button {
+  position: relative;
+}
+
+/* Add smooth transition for the event indicator */
+.day-button span {
+  transition: all 0.2s ease-in-out;
+}
+
+.day-button:hover span {
+  transform: translate(-50%, -50%) scale(1.2);
+}
