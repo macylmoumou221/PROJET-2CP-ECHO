@@ -97,4 +97,4 @@ Backend Macyl, Rayane, Omar
 ---------------------------
 📬 CONTACT
 ---------------------------
-For questions or contributions, please contact us at echoproject@gmail.com
+For questions or contributions, please contact us at m_moumou@estin.dz
